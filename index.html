@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/birthday-cake.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Happy Birthday for em" />
+    <meta name="keywords" content="em" />
+    <meta name="author" content="Quốc Nguyễn" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Dancing+Script:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- index.html -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@300;400;600&display=swap&subset=vietnamese"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <link rel="preload" as="image" href="/images/han1.jpg" />
+    <link rel="preload" as="image" href="/images/han2.jpg" />
+    <link rel="preload" as="image" href="/images/han3.jpg" />
+    <link rel="preload" as="image" href="/images/han4.jpg" />
+    <link rel="preload" as="image" href="/images/han5.jpg" />
+    <link rel="preload" as="image" href="/images/han6.jpg" />
+    <link rel="preload" as="image" href="/images/han7.jpg" />
+    <link rel="preload" as="image" href="/images/han8.jpg" />
+    <link rel="preload" as="image" href="/images/han9.jpg" />
+    <link rel="preload" as="image" href="/images/han10.jpg" />
+    <link rel="preload" as="image" href="/images/han11.jpg" />
+    <link rel="preload" as="image" href="/images/han12.jpg" />
+    <link rel="preload" as="image" href="/images/han13.jpg" />
+    <link rel="preload" as="image" href="/images/han14.jpg" />
+    <link rel="preload" as="image" href="/images/han15.jpg" />
+
+    <title>🎉 Happy Birthday Hương!</title>
+
+    <style>
+      /* Prevent flash of unstyled content */
+      body {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      body.loaded {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      /* Loading screen styles */
+      #initial-loading {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Initial loading screen for very fast loading -->
+    <div id="initial-loading">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <div id="root"></div>
+
+    <script>
+      // Remove initial loading screen once React takes over
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          const loading = document.getElementById("initial-loading");
+          if (loading) {
+            loading.style.opacity = "0";
+            setTimeout(() => loading.remove(), 500);
+          }
+          document.body.classList.add("loaded");
+        }, 1000);
+      });
+    </script>
+
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
