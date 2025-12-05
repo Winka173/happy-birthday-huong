@@ -35,7 +35,7 @@ const VirtualGiftUnwrapping = ({ onComplete }) => {
       content: {
         emoji: "🎈",
         title: "Niềm vui bất tận!",
-        message: "Chúc em có hững ngày tháng luôn tràn đầy tiếng cười!",
+        message: "Chúc em có những ngày tháng luôn tràn đầy tiếng cười!",
       },
     },
     {
@@ -56,26 +56,32 @@ const VirtualGiftUnwrapping = ({ onComplete }) => {
     setIsUnwrapping(true);
     setShowGiftContent(false);
 
-    // Faster unwrap animation sequence
+    // Mark gift as unwrapped and show content
     setTimeout(() => {
       setUnwrappedGifts((prev) => new Set([...prev, giftId]));
-      setShowGiftContent(true);
-    }, 600); // Reduced from 1000ms to 600ms
 
-    setTimeout(() => {
-      setIsUnwrapping(false);
-      if (giftId < gifts.length - 1) {
-        // Keep content visible longer before transitioning
+      // Wait a bit for unwrap animation, then show content
+      setTimeout(() => {
+        setShowGiftContent(true);
+        setIsUnwrapping(false);
+      }, 400);
+    }, 600);
+
+    // Handle next gift or completion
+    if (giftId < gifts.length - 1) {
+      // Show content for 4 seconds, then transition to next
+      setTimeout(() => {
+        setShowGiftContent(false);
         setTimeout(() => {
-          setShowGiftContent(false);
-          setTimeout(() => {
-            setCurrentGift(giftId + 1);
-          }, 400); // Reduced transition delay
-        }, 4000); // Show content for 4 seconds instead of immediately hiding
-      } else {
-        setTimeout(onComplete, 5000); // Keep final gift visible longer
-      }
-    }, 1000); // Reduced total unwrapping time
+          setCurrentGift(giftId + 1);
+        }, 300);
+      }, 5000);
+    } else {
+      // Final gift - trigger completion
+      setTimeout(() => {
+        if (onComplete) onComplete();
+      }, 6000);
+    }
   };
 
   // Auto unwrap first gift after delay
@@ -253,16 +259,16 @@ const VirtualGiftUnwrapping = ({ onComplete }) => {
         {/* Current gift message with smooth transitions */}
         <div className="relative min-h-[200px] flex items-center justify-center">
           <AnimatePresence mode="wait">
-            {showGiftContent && unwrappedGifts.has(currentGift) && (
+            {showGiftContent && (
               <motion.div
                 key={`gift-content-${currentGift}`}
                 initial={{ opacity: 0, y: 50, scale: 0.8 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -30, scale: 0.9 }}
                 transition={{
-                  duration: 0.5, // Faster transitions
+                  duration: 0.5,
                   type: "spring",
-                  stiffness: 120, // More responsive spring
+                  stiffness: 120,
                   damping: 20,
                 }}
                 className="bg-white/80 backdrop-blur-lg rounded-2xl p-6 md:p-8 shadow-2xl max-w-md mx-auto absolute"
@@ -304,7 +310,7 @@ const VirtualGiftUnwrapping = ({ onComplete }) => {
                   <motion.button
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.5 }} // Reduced from 2s to 1.5s
+                    transition={{ delay: 1.5 }}
                     onClick={() => unwrapGift(currentGift + 1)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
